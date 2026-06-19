@@ -16,10 +16,6 @@ load_dotenv()
 MIME_TEXT_PLAIN = "text/plain"
 
 MAX_QUESTIONS_PER_SESSION = 10
-
-if st.session_state.qa_count >= MAX_QUESTIONS_PER_SESSION:
-    st.error("Session limit reached (10 questions). Please restart the app.")
-    st.stop()
     
 def init_session_state() :
     for key, default in {
@@ -42,6 +38,10 @@ st.set_page_config(page_title="DocTalk — Ask your PDFs", page_icon="📄", lay
 # -----------------------------
 
 init_session_state()
+
+if st.session_state.qa_count >= MAX_QUESTIONS_PER_SESSION:
+    st.error("Session limit reached (10 questions). Please restart the app.")
+    st.stop()
 # -----------------------------
 # SIDEBAR
 # -----------------------------
