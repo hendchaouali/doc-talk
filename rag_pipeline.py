@@ -4,20 +4,22 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_community.vectorstores import FAISS
-from langchain_core.runnables import RunnableLambda
 from groq import Groq
 from dotenv import load_dotenv
-import tempfile, os, json
-from datetime import datetime
+import tempfile, os
 
 load_dotenv()
 
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 GROQ_MODEL = "llama-3.1-8b-instant"
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+try:
+    import streamlit as st
+    GROQ_API_KEY = st.secrets.get("GROQ_API_KEY") or os.getenv("GROQ_API_KEY")
+except Exception:
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 if not GROQ_API_KEY:
-    raise ValueError("GROQ_API_KEY not found in .env file!")
+    raise ValueError("GROQ_API_KEY not found. Add it to .env locally or Streamlit secrets on Cloud.")
 
 groq_client = Groq(api_key=GROQ_API_KEY)
 

@@ -9,7 +9,7 @@ from rag_pipeline import (
     get_dashboard_insights
 )
 from datetime import datetime
-import json, io
+import json
 
 load_dotenv()
 
